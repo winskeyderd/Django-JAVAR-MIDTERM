@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    {% load static %}
+    
+    <style>
+        /* General page styling */
+        body {
+            background-color: #dfffd6; /* Pastel green */
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Confirmation box styling */
+        .confirm-box {
+            background-color: #fff9c4; /* Pastel yellow */
+            border-radius: 10px;
+            padding: 20px;
+            width: 300px;
+            margin: 100px auto;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Image styling */
+        .confirm-box img {
+            width: 50px;
+            height: 50px;
+        }
+
+        /* Heading styling */
+        h2 {
+            color: #388e3c; /* Darker green */
+        }
+
+        .delete-text {
+            color: #d32f2f; /* Red for emphasis */
+        }
+
+        /* Task name styling */
+        .task-name {
+            font-weight: bold;
+            color: #555;
+        }
+
+        /* Button container */
+        .Btns {
+            margin-top: 20px;
+        }
+
+        /* Cancel and Delete button styling */
+        .Cancel, .Delete {
+            display: inline-block;
+            text-decoration: none;
+            padding: 10px 15px;
+            margin: 5px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .Cancel {
+            background-color: #a5d6a7; /* Lighter pastel green */
+            color: #2e7d32;
+            border: 2px solid #2e7d32;
+        }
+
+        .Cancel:hover {
+            background-color: #81c784;
+        }
+
+        .Delete {
+            background-color: #ffccbc; /* Light red/orange */
+            color: #d32f2f;
+            border: 2px solid #d32f2f;
+        }
+
+        .Delete:hover {
+            background-color: #e57373;
+        }
+    </style>
+</head>
+<body class="deletion-container">
+    <div class="confirm-box">
+        <h2>Are You Sure You Want To <span class="delete-text">Delete</span>?</h2>
+        <p class="task-name">'{{Task.title}}'</p>
+        <div class="Btns">
+            <a class="Cancel" href="{% url 'Task_List' %}">Cancel</a>
+            <a class="Delete" href="delete_task/">Delete Task</a>
+        </div>
+    </div>
+</body>
+</html>

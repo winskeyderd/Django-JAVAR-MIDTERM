@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Manager - Search</title>
+    {% load static %}
+    
+    <style>
+        /* General Page Styling */
+        body {
+            background-color: #e3f2fd; /* Soft pastel blue */
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* View Container */
+        .view-container {
+            width: 90%;
+            max-width: 800px;
+            background-color: #ffffff; /* White background */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        /* Add Task Button */
+        .view-container a {
+            display: inline-block;
+            background-color: #64b5f6; /* Light pastel blue */
+            color: #ffffff;
+            padding: 10px 15px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .view-container a:hover {
+            background-color: #42a5f5;
+        }
+
+        /* Search Bar */
+        .Search {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+
+        .Search input {
+            padding: 8px;
+            width: 60%;
+            border: 2px solid #90caf9;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .Search button {
+            padding: 8px 12px;
+            margin-left: 5px;
+            background-color: #42a5f5;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .Search button:hover {
+            background-color: #2196f3;
+        }
+
+        .ClearSearch {
+            display: inline-block;
+            margin-left: 10px;
+            color: #d32f2f;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .ClearSearch:hover {
+            color: #b71c1c;
+        }
+
+        /* Search Results Title */
+        h3 {
+            color: #1565c0; /* Deep blue */
+            margin-bottom: 10px;
+        }
+
+        /* No Results Found */
+        p {
+            color: #d32f2f;
+            font-weight: bold;
+        }
+
+        /* Table Styling */
+        .view-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        .view-table th, .view-table td {
+            border: 1px solid #bbdefb; /* Light blue borders */
+            padding: 10px;
+            text-align: left;
+        }
+
+        .view-table th {
+            background-color: #90caf9;
+            color: white;
+        }
+
+        .view-table tr:nth-child(even) {
+            background-color: #e3f2fd;
+        }
+
+        /* Actions */
+        td a {
+            margin-right: 10px;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        td a:first-child {
+            background-color: #4caf50; /* Green */
+            color: white;
+        }
+
+        td a:last-child {
+            background-color: #d32f2f; /* Red */
+            color: white;
+        }
+
+        td a:hover:first-child {
+            background-color: #388e3c;
+        }
+
+        td a:hover:last-child {
+            background-color: #b71c1c;
+        }
+    </style>
+</head>
+<body class="List-Container">
+    <section class="view-container">
+        <a href="{%url 'AddTask'%}">Add Task</a>
+
+        <form class="Search" method="GET" action="{% url 'task_search' %}">
+            <input type="text" name="q" placeholder="Search for Task..." value="{{ query }}">
+            <button type="submit">Search</button>
+            <a class="ClearSearch" href="{%url 'Task_List'%}">Clear</a>
+        </form>
+
+        {% if results %}
+        <h3>Results for "{{ query }}":</h3>
+        <table class="view-table">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Due Date</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for task in results %}
+                <tr>
+                    <td>{{task.title}}</td>
+                    <td>{{task.description}}</td>
+                    <td>{{task.due_date}}</td>
+                    <td>{{task.status}}</td>
+                    <td>
+                        <a href="editTask/{{task.id}}/">Edit</a>
+                        <a href="confirmDelete/{{task.id}}/">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% elif query %}
+        <p>No results found for "{{ query }}".</p>
+        {% endif %}
+    </section>
+</body>
+</html>
